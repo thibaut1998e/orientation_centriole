@@ -9,7 +9,7 @@ def inference(model_name, test_data, labels_txt, txt_save_location):
     """"
     test the classification model and store the results in a txt file
 
-    model_name, str model_name with extension, shoult be located in models folder.
+    model_name, str model_name with extension, should be located in models folder.
     test_data : str, path of the data that we want to make the prediction on
     label_txt : true labels, written in the result file to compare results quickly
     txt_save_location : path of txt file to save"""

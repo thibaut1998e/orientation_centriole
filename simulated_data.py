@@ -11,7 +11,7 @@ simu_data_path = 'simu_centriole_10000pts/simu_centriole_10000pts' #folder with 
 angles_path = 'simu_centriole_10000pts/centriole_tilt.csv' #assiociated angles
 
 
-def rotation_matrix_y(tetha):
+def rotation_matrix_x(tetha):
     tetha = 2 * np.pi * tetha / 360
     return np.array([[np.cos(tetha), 0, np.sin(tetha)],
                      [0,    1,      0],
@@ -63,17 +63,17 @@ class CloudOfPoints:
             binary_rep[tuple(coord)] = 1
         imageio.mimwrite(save_location, binary_rep)
 
-    def rotation_y(self, tetha):
+    def rotation_x(self, tetha):
         """apply a rotation of angle tetha around y axis"""
         res = []
         for p in self.points:
-            p_res = p.dot(rotation_matrix_y(tetha))
+            p_res = p.dot(rotation_matrix_x(tetha))
             res.append(p_res)
         self.points = res
         self.tetha_y = self.tetha_y + tetha
         print('tetha after', self.tetha_y)
 
-    def rotation_y_to(self, tetha_target):
+    def rotation_x_to(self, tetha_target):
         """apply a rotation of angle tetha around y axis so that the resulting angle is tetha_target"""
         tetha = tetha_target - self.tetha_y
         self.rotation_y(tetha)
@@ -82,8 +82,10 @@ class CloudOfPoints:
 angles = read_csv_angles(angles_path)
 for i in range(len(angles)):
     print(f'{i+1} : {angles[i]}')
-
-
+if not os.path.exists('simu_tiffs'):
+    os.makedirs('simu_tiffs')
+if not os.path.exists('simu_tiffs_90'):
+    os.makedirs('simu_tiffs_90')
 for file in os.listdir(simu_data_path):
     idx = int(file.split('.')[0][-4:])
     tetha_y = angles[idx-1]
@@ -91,7 +93,7 @@ for file in os.listdir(simu_data_path):
     points = read_csv_cloud(csv_path)
     cloud = CloudOfPoints(points, tetha_y)
     cloud.save_figure(f'simu_tiffs/simu{idx}.tiff')
-    cloud.rotation_y_to(90)
-    cloud.save_figure(f'simu_tiffs_top_vue/simu{idx}_rotation.tiff')
+    cloud.rotation_x(90)
+    cloud.save_figure(f'simu_tiffs_90/simu{idx}_rotation.tiff')
 
 
