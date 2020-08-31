@@ -35,6 +35,7 @@ def inference(model_name, test_data, labels_txt, txt_save_location):
                 pred_class = np.argmax(probas)
                 to_write = f'{line[0]}\t{pred_class}\t{line[1][0]}\n'
                 f.write(to_write)
+    print(f'results saved at location : {txt_save_location}')
 
 
 def prediction(learn, in_img):
