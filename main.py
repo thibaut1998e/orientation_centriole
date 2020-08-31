@@ -18,7 +18,7 @@ if __name__ == '__main__':
     save_location = f'{pth.models}/{save_name}'
 
     txt_name = 'results'
-    results_txt = f'{pth.training_sets}/centriole_orientation/{txt_name}.txt'
+    results_txt = f'{pth.training_sets}/centriole_orientation/{txt_name}.txt' #path of results txt file to save
 
     train(images_path, labels_path, save_location, bs=bs, nb_epochs=nb_epochs, lr=lr, nb_classes=nb_classes)
     inference(save_name, f'{images_path}/valid', labels_path, results_txt)
